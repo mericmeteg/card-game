@@ -10,11 +10,12 @@ public class Pile : MonoBehaviour
     public Transform TopCardTransform => transform.childCount > 0 ? transform.GetChild(transform.childCount - 1) : null;
     public bool IsTop(Transform card) => card != null && card == TopCardTransform;
 
+
     public CardView Top
     {
         get
         {
-            
+
             for (int i = cards.Count - 1; i >= 0; i--)
             {
                 if (cards[i] == null) cards.RemoveAt(i);
