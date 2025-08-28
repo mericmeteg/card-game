@@ -20,7 +20,7 @@ public class TableauLayout : MonoBehaviour
             var tmp = new List<PileUI>();
             foreach (Transform t in transform)
             {
-                var p = t.GetComponent<PileUI>();
+                var p = t.GetComponent<PileUI>();  // awdad
                 if (p) tmp.Add(p);
             }
             piles = tmp.ToArray(); // sıra: Hierarchy’deki sıraya göre
