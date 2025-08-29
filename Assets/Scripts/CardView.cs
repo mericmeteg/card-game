@@ -9,8 +9,8 @@ public class CardView : MonoBehaviour
     [SerializeField] private CardThemeSO theme;
 
     [Header("Front/Back Roots")]
-    [SerializeField] private GameObject frontGroup; // ön yüz kökü
-    [SerializeField] private GameObject backGroup;  // arka yüz kökü
+    [SerializeField] private GameObject frontGroup; 
+    [SerializeField] private GameObject backGroup;  
 
     [Header("Front - Common")]
     [SerializeField] private TextMeshProUGUI rankText;
@@ -31,20 +31,20 @@ public class CardView : MonoBehaviour
     public enum FlipMode { ScaleX, RotateY }
     [Header("Flip Animation")]
     [SerializeField] private FlipMode flipMode = FlipMode.ScaleX;
-    [SerializeField] private float flipDuration = 0.28f;
-    [SerializeField] private Ease easeIn = Ease.InCubic;   // kapanırken
-    [SerializeField] private Ease easeOut = Ease.OutCubic; // açılırken
+    [SerializeField] private float flipDuration = 1.5f;
+    [SerializeField] private Ease easeIn = Ease.InCubic;   
+    [SerializeField] private Ease easeOut = Ease.OutCubic; 
     [SerializeField] private bool blockRaycastsDuringFlip = true;
 
     Tween flipTween;
-    Vector3 initialLocalScale; // ölçek korunur
+    Vector3 initialLocalScale; 
 
     // ---- Runtime state ----
     public Suit Suit { get; private set; }
     public Rank Rank { get; private set; }
     public bool IsFaceUp { get; private set; } = true;
 
-    CanvasGroup cg; // opsiyonel raycast kilidi için
+    CanvasGroup cg; 
 
     void Awake()
     {
@@ -55,14 +55,14 @@ public class CardView : MonoBehaviour
 
     void OnEnable()
     {
-        // sahnede prefab dursa bile ön yüz açık gelsin
+       
         if (frontGroup && backGroup)
         {
             frontGroup.SetActive(true);
             backGroup.SetActive(false);
         }
 
-        // Temel test kartı (sahnede SetCard çağrılmamışsa)
+       
         if (theme && rankText && (smallSuitSimple || bigSuitSimple))
         {
             if (string.IsNullOrEmpty(rankText.text))
@@ -83,13 +83,13 @@ public class CardView : MonoBehaviour
         Suit = suit;
         Rank = rank;
 
-        // Rank yazısı + renk
+        
         rankText.text = RankToString(rank);
         bool isRed = (suit == Suit.Hearts || suit == Suit.Diamonds);
         rankText.color = isRed ? redColor : blackColor;
 
         int sIdx = (int)suit;
-        bool fancy = CardThemeSO.IsFancy(rank); // SADECE J/Q/K resimli
+        bool fancy = CardThemeSO.IsFancy(rank); 
 
         if (fancy)
         {
@@ -101,11 +101,11 @@ public class CardView : MonoBehaviour
             if (theme.suitBig != null && theme.suitBig.Length >= 4)
                 bigSuitFancy.sprite = theme.suitBig[sIdx];
 
-            // artwork
+            
             var art = theme.GetArtwork(rank, suit);
             if (art) bigSuitFancy.sprite = art;
 
-            // Artwork yoksa sadeye düş
+            
             if (!art)
             {
                 fancyGroup.SetActive(false);
@@ -124,10 +124,10 @@ public class CardView : MonoBehaviour
         }
 
         if (!keepFaceState)
-            SetFaceUp(IsFaceUp, instant: true); // state'e göre front/back aç/kapa
+            SetFaceUp(IsFaceUp, instant: true); 
     }
 
-    // --- Public API ---
+    
     public void FlipOpen(float? duration = null)  => SetFaceUp(true,  instant:false, duration);
     public void FlipClose(float? duration = null) => SetFaceUp(false, instant:false, duration);
     public void FlipToggle(float? duration = null)=> SetFaceUp(!IsFaceUp, instant:false, duration);
@@ -143,7 +143,7 @@ public class CardView : MonoBehaviour
 
         if (IsFaceUp == up)
         {
-            // Zaten istenen yüzdeyse animasyona gerek yok
+            
             ApplyFace(up, true);
             return;
         }
@@ -152,7 +152,7 @@ public class CardView : MonoBehaviour
 
         float dur = durationOverride ?? flipDuration;
 
-        // Raycast’leri kilitle (drop’ları etkilemesin)
+        
         if (blockRaycastsDuringFlip && cg)
         {
             cg.blocksRaycasts = false;
@@ -161,7 +161,7 @@ public class CardView : MonoBehaviour
 
         if (flipMode == FlipMode.ScaleX)
         {
-            // 1) 1 -> 0 (kapan), yüz değiştir, 0 -> 1 (açıl)
+            
             transform.localScale = initialLocalScale;
             flipTween = DOTween.Sequence()
                 .Append(transform.DOScaleX(0f, dur * 0.5f).SetEase(easeIn))
@@ -169,7 +169,7 @@ public class CardView : MonoBehaviour
                 .Append(transform.DOScaleX(Mathf.Abs(initialLocalScale.x), dur * 2f).SetEase(easeOut))
                 .OnComplete(UnblockRaycasts);
         }
-        else // RotateY
+        else 
         {
             var startRot = transform.localEulerAngles;
             flipTween = DOTween.Sequence()
@@ -189,7 +189,7 @@ public class CardView : MonoBehaviour
 
         if (instant)
         {
-            // Görsel kalıntıları temizle
+            
             if (flipMode == FlipMode.ScaleX)
                 transform.localScale = new Vector3(Mathf.Abs(initialLocalScale.x), initialLocalScale.y, initialLocalScale.z);
             else
