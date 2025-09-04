@@ -4,26 +4,26 @@ using UnityEngine;
 public class TableauLayout : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] CardView cardPrefab;     // tek prefab
-    [SerializeField] PileUI[] piles;          // 7 sütun (Pile 1..7)
-    [SerializeField] Transform cardsParent;   // genelde Tableau (isteğe bağlı)
+    [SerializeField] CardView cardPrefab;     
+    [SerializeField] PileUI[] piles;          
+    [SerializeField] Transform cardsParent;   
 
-    // İstersen dışarıda bir yerde de tutuyor olabilirsin; yoksa bunu kullan
+    
     readonly List<(Suit suit, Rank rank)> deck = new();
     bool dealt;
 
     void Awake()
     {
-        // Pile referanslarını otomatik doldur (çocuklardan)
+        
         if (piles == null || piles.Length == 0)
         {
             var tmp = new List<PileUI>();
             foreach (Transform t in transform)
             {
-                var p = t.GetComponent<PileUI>();  // awdad
+                var p = t.GetComponent<PileUI>();  
                 if (p) tmp.Add(p);
             }
-            piles = tmp.ToArray(); // sıra: Hierarchy’deki sıraya göre
+            piles = tmp.ToArray(); 
         }
     }
 
@@ -31,9 +31,9 @@ public class TableauLayout : MonoBehaviour
     {
         if (!dealt)
         {
-            BuildDeck52();   // 52’lik deste
-            Shuffle(deck);   // Fisher–Yates
-            DealTableau28(); // 1..7 dağıt
+            BuildDeck52();   
+            Shuffle(deck);   
+            DealTableau28(); 
             dealt = true;
         }
     }

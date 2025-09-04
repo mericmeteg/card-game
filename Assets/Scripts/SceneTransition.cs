@@ -5,13 +5,13 @@ using DG.Tweening;
 
 public class SceneFader : MonoBehaviour
 {
-    [SerializeField] Image fade;     // tam ekran siyah Image
+    [SerializeField] Image fade;     
     [SerializeField] float dur = 0.8f;
-    [SerializeField] bool fadeInOnStart = true; // sadece oyun sahnesinde true
+    [SerializeField] bool fadeInOnStart = true; 
 
     void Start()
     {
-        if (fadeInOnStart) fade.DOFade(0f, dur);   // açılışta şeffaflaş
+        if (fadeInOnStart) fade.DOFade(0f, dur);  
     }
 
     public void Load(string sceneName)

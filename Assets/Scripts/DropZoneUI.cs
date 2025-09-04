@@ -5,11 +5,17 @@ using UnityEngine.EventSystems;
 public class DropZone : MonoBehaviour, IDropHandler
 {
     [Header("Snap ayarı")]
-    [SerializeField] float yNudge = 0f; // istersen ufak aşağı itme (-20 gibi)
+    [SerializeField] float yNudge = 0f; 
 
     Pile pile;
+    PileUI pileUI;
+    DraggableCardUI draggableCard;
 
-    void Awake() => pile = GetComponent<Pile>();
+    void Awake()
+    {
+        pile = GetComponent<Pile>();
+        pileUI = GetComponent<PileUI>();
+    } 
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -29,7 +35,7 @@ public class DropZone : MonoBehaviour, IDropHandler
         r.localScale    = Vector3.one;
         r.SetAsLastSibling();
         r.anchoredPosition = new Vector2(0f, yNudge);
-        GetComponent<PileUI>()?.RelayoutFromHierarchy();
+        pileUI?.RelayoutFromHierarchy();
         pile.RevealTopIfNeeded();
     }
 }

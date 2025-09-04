@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class RestartGame : MonoBehaviour
 {
-    [SerializeField] private string OyunEkrani; // Inspector’dan yaz
+    [SerializeField] private string OyunEkrani; 
 
     public void LoadScene()
     {

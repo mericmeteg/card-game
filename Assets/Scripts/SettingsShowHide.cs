@@ -5,19 +5,19 @@ using DG.Tweening;
 public class SettingsShowHideScript : MonoBehaviour
 {
     [Header("Assign in Inspector")]
-    [SerializeField] RectTransform panel;     // SettingPanel
-    [SerializeField] CanvasGroup canvasGroup; // SettingScreen'in CanvasGroup'u
-    [SerializeField] Image backdrop;          // (opsiyonel) karartma
+    [SerializeField] RectTransform panel;     
+    [SerializeField] CanvasGroup canvasGroup; 
+    [SerializeField] Image backdrop;          
 
     [Header("Animation")]
     [SerializeField] float duration = 0.35f;
-    [SerializeField] Ease easeIn  = Ease.OutCubic; // açılırken
-    [SerializeField] Ease easeOut = Ease.InCubic;  // kapanırken
+    [SerializeField] Ease easeIn  = Ease.OutCubic; 
+    [SerializeField] Ease easeOut = Ease.InCubic;  
     [SerializeField] float backdropAlpha = 0.6f;
 
     [Header("Positions (Anchored)")]
-    [SerializeField] Vector2 shownPos  = Vector2.zero;      // merkez
-    [SerializeField] Vector2 hiddenPos = new Vector2(0, -900f); // ekrandan aşağı
+    [SerializeField] Vector2 shownPos  = Vector2.zero;      
+    [SerializeField] Vector2 hiddenPos = new Vector2(0, -900f); 
 
     bool isVisible;
     Tween t;
@@ -27,7 +27,7 @@ public class SettingsShowHideScript : MonoBehaviour
         if (!panel)      Debug.LogError("[Settings] Panel atanmamış!");
         if (!canvasGroup) Debug.LogError("[Settings] CanvasGroup atanmamış!");
 
-        // İlk durumda kapalı başlat
+        
         ApplyHiddenState();
     }
 
@@ -44,7 +44,7 @@ public class SettingsShowHideScript : MonoBehaviour
         if (backdrop)
         {
             var c = backdrop.color; c.a = 0f; backdrop.color = c;
-            backdrop.gameObject.SetActive(true); // raycast için aktif kalsın
+            backdrop.gameObject.SetActive(true); 
         }
         isVisible = false;
     }
@@ -57,7 +57,7 @@ public class SettingsShowHideScript : MonoBehaviour
         panel.SetAsLastSibling();
         canvasGroup.blocksRaycasts = true;
 
-        Sequence s = DOTween.Sequence().SetUpdate(true); // timeScale'den bağımsız
+        Sequence s = DOTween.Sequence().SetUpdate(true); 
         s.Join(panel.DOAnchorPos(shownPos, duration).SetEase(easeIn));
         s.Join(canvasGroup.DOFade(1f, duration * 0.9f));
         if (backdrop) s.Join(backdrop.DOFade(backdropAlpha, duration));

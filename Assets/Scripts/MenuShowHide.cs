@@ -4,16 +4,16 @@ using DG.Tweening;
 public class MenuShowHide : MonoBehaviour
 {
     [Header("Assign in Inspector")]
-    public GameObject MenuScreen;      // arka fon + çerçeve
-    public RectTransform MenuPanel;    // içerik paneli (RectTransform gerekli)
-    public CanvasGroup canvasGroup;    // MenuScreen üzerine ekle
+    public GameObject MenuScreen;      
+    public RectTransform MenuPanel;    
+    public CanvasGroup canvasGroup;   
 
-    [Header("Anim Settings")]
+    [Header("Animation Settings")]
     public float duration = 0.35f;
-    public Ease easeIn = Ease.OutBack;   // açılırken
-    public Ease easeOut = Ease.InBack;   // kapanırken
-    public Vector2 shownPos = Vector2.zero;        // merkez
-    public Vector2 hiddenPos = new Vector2(0, -900f); // ekrandan aşağı
+    public Ease easeIn = Ease.OutBack;  
+    public Ease easeOut = Ease.InBack;   
+    public Vector2 shownPos = Vector2.zero;        
+    public Vector2 hiddenPos = new Vector2(0, -900f); 
 
     Tween t;
     bool isVisible;
@@ -35,7 +35,7 @@ public class MenuShowHide : MonoBehaviour
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
         }
-        MenuScreen.SetActive(true); // aktif kalsın ama görünmez olsun
+        MenuScreen.SetActive(true); 
         isVisible = false;
     }
 
